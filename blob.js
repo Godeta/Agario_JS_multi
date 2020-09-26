@@ -1,10 +1,33 @@
-function Blob(x, y, r) {
+function Blob(x, y, r, PerfectCircle = true) {
   this.pos = createVector(x, y);
   this.r = r;
+  this.vel = createVector(0, 0);
+  var yoff = 0;
 
   this.show = function () {
     fill(255);
-    ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
+    if (PerfectCircle) {
+      ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
+    } else {
+      //on refait une forme elliptique mais de manière à ce qu'elle change
+      push();
+      translate(this.pos.x, this.pos.y);
+      beginShape();
+      //la forme est crée en reliant des points tracés de manière à faire un cercle, si on change les points la forme se tord
+      var xoff = 0;
+      for (var i = 0; i < TWO_PI; i += 0.1) {
+        var offset = map(noise(xoff, yoff), -1, 1, -25, 25);
+        var r = this.r + offset;
+        var x = r * cos(i);
+        var y = r * sin(i);
+        vertex(x, y);
+        xoff += 0.1;
+        //ellipse(x,y,4,4);
+      }
+      endShape();
+      pop();
+      yoff += 0.01;
+    }
   }
   this.update = function () {
     var mouse = createVector(mouseX, mouseY);
@@ -13,8 +36,10 @@ function Blob(x, y, r) {
     //comme on a fait un translate pour garder notre blob au milieu 
     mouse.sub(width / 2, height / 2);
     //le vecteur aura constamment la vitesse de 3
-    mouse.setMag(4);
-    this.pos.add(mouse);
+    mouse.setMag(5);
+    //pour que les déplacements aient de minis accélerations, sinon vitesse uniforme bizarre
+    this.vel.lerp(mouse, 0.2);
+    this.pos.add(this.vel);
   }
   this.eat = function (other) {
     var d = p5.Vector.dist(this.pos, other.pos);
