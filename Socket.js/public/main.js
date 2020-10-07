@@ -3,7 +3,7 @@ let extraCanvas; //ajoute un deuxième fond
 let mode = 0;
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(700, 500);
   //ne sert à rien de faire le deuxième Canvas plsu grand car il est inséré comme image
   extraCanvas = createGraphics(600, 600);
   //extraCanvas.background(100,200,50);
