@@ -1,3 +1,4 @@
 #node modules, pas besoin de les publier
 Socket.js/node_modules/
 Socket.js/.env
+agarioMultiplayer/node_modules
