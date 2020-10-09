@@ -12,4 +12,5 @@ https://godeta.github.io/Agario_JS_multi/agarioLocal1p/index.html
 
 ### Agario online multiplayer in JS
 The remix of the game agario hosted on Heroku, link : 
-
+https://agario-online-mult-remix.herokuapp.com/
+I am still improving and updating the game.
