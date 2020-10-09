@@ -5,7 +5,7 @@ let mode = 0;
 function setup() {
   createCanvas(700, 500);
   //ne sert à rien de faire le deuxième Canvas plsu grand car il est inséré comme image
-  extraCanvas = createGraphics(600, 600);
+  extraCanvas = createGraphics(700, 500);
   //extraCanvas.background(100,200,50);
   extraCanvas.clear(); //transparent
   //connection
