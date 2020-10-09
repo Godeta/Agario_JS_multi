@@ -53,8 +53,16 @@ function draw() {
 
   //affichage des autres joueurs
   for (var i = clients.length - 1; i >= 0; i--) {
-    fill(0,50,200);
-    ellipse(clients[i].x, clients[i].y, clients[i].r * 2, clients[i].r * 2);
+    var id = clients[i].id;
+    if (id.substring(2, id.length) !== socket.id) {
+      fill(0, 0, 255);
+      ellipse(clients[i].x, clients[i].y, clients[i].r * 2, clients[i].r * 2);
+
+      fill(255);
+      textAlign(CENTER);
+      textSize(4);
+      text(clients[i].id, clients[i].x, clients[i].y + clients[i].r);
+    }
     // clients[i].show();
     // if (blob.eat(clients[i])) {
     //   clients.splice(i, 1);
