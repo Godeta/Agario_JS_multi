@@ -11,6 +11,8 @@ var socket = require('socket.io');
 var io = socket(server);
 //event lorsqu'il y a une nouvelle connection
 io.sockets.on('connection', newConnection);
+//en cas de deconnection
+io.sockets.on("disconnect", disconnection);
 
 //boucle qui envoie les données de chaque clients à tout le monde
 setInterval(heartbeat, 1000);
@@ -59,4 +61,14 @@ function newConnection(socket) {
         blob.y = data.y;
         blob.r = data.r;
     }
+}
+function disconnection(socket) {
+    console.log("Le client est parti :" + socket.id);
+    var index = 0;
+    for (var i = 0; i<clients.length; i++) {
+        if(socket.id == clients[i].id) {
+            index = i;
+        }
+    }
+    clients.remove(index);
 }

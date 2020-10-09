@@ -24,6 +24,12 @@ function setup() {
     function (data) {
       clients = data;
       // console.log(data);
+      //ajout de petites orbes à manger
+      if(blobs.length<1000) {
+      var x = random(-width, width);
+    var y = random(-height, height);
+    blobs.push(new Blob(x, y, 16) );
+      }
     });
   for (var i = 0; i < 50; i++) {
     //on créer aussi des particules en dehors de la fenêtre vu qu'elle se déplace en fonctione de notre position avec translate
