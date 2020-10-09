@@ -56,7 +56,7 @@ function Blob(x, y, r, PerfectCircle = true) {
     }
   }
   this.constrain = function () {
-    blob.pos.x = constrain(blob.pos.x, -width / 4, width / 4);
-    blob.pos.y = constrain(blob.pos.y, -height / 4, height / 4);
+    blob.pos.x = constrain(blob.pos.x, -width , width );
+    blob.pos.y = constrain(blob.pos.y, -height, height );
   };
 }

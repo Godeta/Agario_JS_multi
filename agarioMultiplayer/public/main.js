@@ -54,7 +54,8 @@ function draw() {
   //affichage des autres joueurs
   for (var i = clients.length - 1; i >= 0; i--) {
     var id = clients[i].id;
-    if (id.substring(2, id.length) !== socket.id) {
+    //pour chaque client du tableau sauf le client actuel qui execute le code (pour ne pas se faire apparaître soi-même), on peut vérifier sa valeur dans la console de chrome en tapant socket.id
+    if (id !== socket.id) {
       fill(0, 0, 255);
       ellipse(clients[i].x, clients[i].y, clients[i].r * 2, clients[i].r * 2);
 
