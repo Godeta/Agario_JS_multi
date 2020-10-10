@@ -67,7 +67,7 @@ function draw() {
 
       fill(255);
       textAlign(CENTER);
-      textSize(4);
+      textSize(clients[i].r/3);
       text(clients[i].id, clients[i].x, clients[i].y + clients[i].r);
     }
     // clients[i].show();
@@ -78,7 +78,9 @@ function draw() {
 
 
   blob.show();
+  if(mouseIsPressed){
   blob.update();
+  }
   blob.constrain();
   //update de la position
   //les données à envoyer au serveur

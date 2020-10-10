@@ -13,7 +13,7 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 //boucle qui envoie les données de chaque clients à tout le monde
-setInterval(heartbeat, 1000);
+setInterval(heartbeat, 50);
 
 function heartbeat() {
     io.sockets.emit('heartbeat',clients);
@@ -64,7 +64,8 @@ function newConnection(socket) {
         var blob;
         //méthode simple mais pas otpimisée, faire une hashmap
         for (var i = 0; i < clients.length; i++) {
-            if (socket.id = clients[i].id) {
+            //attention 2 fois = dans les if !!!
+            if (socket.id == clients[i].id) {
                 blob = clients[i];
             }
         }
