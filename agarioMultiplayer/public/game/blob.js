@@ -1,7 +1,8 @@
-function Blob(x, y, r, PerfectCircle = true) {
+function Blob(x, y, r, PerfectCircle = true,name ="nobody") {
   this.pos = createVector(x, y);
   this.r = r;
   this.vel = createVector(0, 0);
+  this.name = name;
   var yoff = 0;
 
   this.show = function () {
