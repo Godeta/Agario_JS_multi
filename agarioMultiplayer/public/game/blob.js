@@ -1,15 +1,22 @@
-function Blob(x, y, r, PerfectCircle = true,name ="nobody") {
+function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
   this.pos = createVector(x, y);
   this.r = r;
   this.vel = createVector(0, 0);
   this.name = name;
+  this.skin = skin;
   var yoff = 0;
-
+  var img;
+  if(!PerfectCircle) {
+    var url = "img/"+skin+".png";
+    img = loadImage(url,yes=> {console.log("L'image a bien chargée !")},no=> {skin="Aucun";} );
+  }
   this.show = function () {
     fill(255);
     if (PerfectCircle) {
       ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
     } else {
+      //si on n'a pas choisi de skin
+      if(skin == "Aucun") {
       //on refait une forme elliptique mais de manière à ce qu'elle change
       push();
       translate(this.pos.x, this.pos.y);
@@ -29,6 +36,11 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody") {
       pop();
       yoff += 0.01;
     }
+    //sinon
+    else {
+      image(img,this.pos.x,this.pos.y,this.r*2,this.r*2);
+    }
+  }
   }
   this.update = function () {
     var mouse = createVector(mouseX, mouseY);

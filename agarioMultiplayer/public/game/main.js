@@ -7,6 +7,7 @@ var biggest = [];
 var zoom = 1;
 var div;
 var nom = localStorage["nom"];
+var skin = localStorage["skin"];
 
 
 function setup() {
@@ -16,8 +17,7 @@ function setup() {
   //connection
   // socket = io.connect('http://localhost:3000');
   socket = io();
-
-  blob = new Blob(random(width), random(height), random(8, 48), false, nom);
+  blob = new Blob(random(width), random(height), random(8, 48), false, nom, skin);
   //les données à envoyer au serveur
   var data = {
     x: blob.pos.x,
