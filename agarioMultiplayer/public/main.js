@@ -3,6 +3,7 @@ var blob;
 
 var blobs = [];
 var clients = [];
+var biggest = [];
 var zoom = 1;
 
 function setup() {
@@ -69,6 +70,7 @@ function draw() {
       textAlign(CENTER);
       textSize(clients[i].r/3);
       text(clients[i].id, clients[i].x, clients[i].y + clients[i].r);
+
     }
     // clients[i].show();
     // if (blob.eat(clients[i])) {
@@ -82,6 +84,18 @@ function draw() {
   blob.update();
   }
   blob.constrain();
+  //affichage des 5 plus gros
+  biggest = sort2(clients);
+  if(clients.length>1) {
+    var min = clients.length>6 ? 6 : clients.length ;
+  for  (var i=1; i<min; i++) {
+    fill(255);
+      textAlign(LEFT);
+      textSize(biggest[i].r/3);
+      text(biggest[i].id, 10, i*50);
+  }
+}
+
   //update de la position
   //les données à envoyer au serveur
   var data = {
@@ -92,3 +106,26 @@ function draw() {
   socket.emit('update', data);
 
 }
+
+function sort2(clients2){
+  var tab = clients2;
+  for(var i = 0; i < tab.length; i++){
+    //stocker l'index de l'élément minimum
+    var min = i; 
+    for(var j = i+1; j < tab.length; j++){
+      if(tab[j].r < tab[min].r){
+        // console.log(tab);
+        // console.log(j);
+        // console.log(tab[0].r);
+       // mettre à jour l'index de l'élément minimum
+       min = j; 
+      }
+    }
+    var tmp = tab[i];
+    tab[i] = tab[min];
+    tab[min] = tmp;
+  }
+  // console.log(tab[id]);
+  //  console.log(tab[1].r);
+  return tab;
+};
