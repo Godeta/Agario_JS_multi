@@ -12,6 +12,7 @@ var skin = localStorage["skin"];
 
 function setup() {
   createCanvas(600, 600);
+  imageMode(CENTER);
   //texte pour l'affichage des plus gros blob
    div = createDiv('').size(100, 100);
   //connection

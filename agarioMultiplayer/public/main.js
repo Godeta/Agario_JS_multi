@@ -18,10 +18,12 @@ function resetSetup() {
 
   //choisir le skin
   selectSkin = createSelect();
-  selectSkin.option('Paul');
-  selectSkin.option('Titouan');
-  selectSkin.option('Jesus');
-  selectSkin.option('Antoine');
+  selectSkin.option('paul');
+  selectSkin.option('titouan');
+  selectSkin.option('jesus');
+  selectSkin.option('antoine');
+  selectSkin.option('victor');
+  selectSkin.option('paulM');
   selectSkin.option('Aucun');
   
   background(100);

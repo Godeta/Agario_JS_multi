@@ -38,7 +38,9 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
     }
     //sinon
     else {
+      // drawIMG();
       image(img,this.pos.x,this.pos.y,this.r*2,this.r*2);
+      // code déplacé dans le update
     }
   }
   }
@@ -53,8 +55,13 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
     //pour que les déplacements aient de minis accélerations, sinon vitesse uniforme bizarre
     this.vel.lerp(mouse, 0.2);
     this.pos.add(this.vel);
+    if(skin == "Aucun") {
     //affichage flèche pour le déplacement
     drawArrow(this.pos, mouse, 200);
+    }
+    else {
+    drawIMG(this.pos,mouse,img);
+    }
   }
 
   this.eat = function (other) {
@@ -75,6 +82,14 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
     blob.pos.y = constrain(blob.pos.y, -height, height );
   };
 
+  function drawIMG(base, vec, img) {
+    push();
+    translate(base.x, base.y);
+    rotate(vec.heading());
+    translate(vec.mag() - this.r*2, 0);
+    image(img,vec.x,vec.y,this.r*2,this.r*2);
+    pop();
+  }
   function drawArrow(base, vec, myColor) {
     push();
     stroke(myColor);
