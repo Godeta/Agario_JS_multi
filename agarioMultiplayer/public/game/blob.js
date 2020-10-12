@@ -6,13 +6,14 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
   this.skin = skin;
   var yoff = 0;
   var img;
+  var colorT = [random(255),random(255),random(40,200)];
   
   if(!PerfectCircle) {
     var url = "img/"+skin+".png";
     img = loadImage(url,yes=> {console.log("L'image a bien chargée !")},no=> {skin="Aucun";} );
   }
   this.show = function () {
-    fill(255);
+    fill(colorT[0],colorT[1],colorT[2]);
     if (PerfectCircle) {
       ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
     } else {
@@ -64,6 +65,13 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
     else {
     drawIMG(this.pos,mouse,img,this.r*4);
     }
+  }
+
+  this.updateOther = function (x,y,r) {
+    var newV = createVector(x,y);
+    drawIMG(newV,createVector(random(-50,50),random(-10,10)),img,this.r*4);
+    this.pos = newV;
+    this.r = r;
   }
 
   this.eat = function (other) {

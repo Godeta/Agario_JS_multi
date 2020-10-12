@@ -3,6 +3,7 @@ var blob;
 
 var blobs = [];
 var clients = [];
+var cliBLobs = {}; //dictionnaire des blobs
 var biggest = [];
 var zoom = 1;
 var div;
@@ -77,9 +78,19 @@ function draw() {
     //pour chaque client du tableau sauf le client actuel qui execute le code (pour ne pas se faire apparaître soi-même), on peut vérifier sa valeur dans la console de chrome en tapant socket.id
     if (id !== socket.id) {
       fill(0, 0, 255);
-      ellipse(clients[i].x, clients[i].y, clients[i].r * 2, clients[i].r * 2);
+      // ellipse(clients[i].x, clients[i].y, clients[i].r * 2, clients[i].r * 2);
+      //on essaye de récupérer le blob de cet id à afficher
+      try {
+        var cliblob = cliBLobs[clients[i].id];
+        cliblob.updateOther(clients[i].x,clients[i].y,clients[i].r);
+        cliblob.show();
+      }
+      //sinon on le créé
+      catch (error) {
+        cliBLobs[clients[i].id] = new Blob(clients[i].x, clients[i].y, clients[i].r,false,clients[i].name,"Paul");
+      }
 
-      fill(255);
+      fill(200,30,0);
       textAlign(CENTER);
       textSize(clients[i].r/3);
       text(clients[i].name, clients[i].x, clients[i].y + clients[i].r);

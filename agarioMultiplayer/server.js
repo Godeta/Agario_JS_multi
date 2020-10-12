@@ -63,15 +63,20 @@ function newConnection(socket) {
     //actualisation des positions des joueurs
     function updateData(data) {
         var blob;
-        //méthode simple mais pas otpimisée, faire une hashmap
-        for (var i = 0; i < clients.length; i++) {
+        //méthode simple mais pas otpimisée, faire une hashmap, parcours inverse si jamais on supp un client
+        for (var i = clients.length-1; i >=0; i--) {
             //attention 2 fois = dans les if !!!
             if (socket.id == clients[i].id) {
                 blob = clients[i];
             }
         }
+        try {
         blob.x = data.x;
         blob.y = data.y;
         blob.r = data.r;
+        }
+        catch (e){
+            console.error(e);
+        }
     }
 }
