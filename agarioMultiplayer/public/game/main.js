@@ -9,6 +9,8 @@ var div;
 var nom = localStorage["nom"];
 var skin = localStorage["skin"];
 
+const MAPSIZE = 4;
+
 
 function setup() {
   createCanvas(600, 600);
@@ -18,7 +20,7 @@ function setup() {
   //connection
   // socket = io.connect('http://localhost:3000');
   socket = io();
-  blob = new Blob(random(width), random(height), random(8, 48), false, nom, skin);
+  blob = new Blob(random(width*MAPSIZE), random(height*MAPSIZE), random(8, 48), false, nom, skin);
   //les données à envoyer au serveur
   var data = {
     x: blob.pos.x,
@@ -34,9 +36,11 @@ function setup() {
       // console.log(data);
       //ajout de petites orbes à manger
       if(blobs.length<1000) {
-      var x = random(-width, width);
-    var y = random(-height, height);
+        for(var i =0; i<2; i++) {
+      var x = random(-width*MAPSIZE, width*MAPSIZE);
+    var y = random(-height*MAPSIZE, height*MAPSIZE);
     blobs.push(new Blob(x, y, 16) );
+        }
       }
     });
   for (var i = 0; i < 50; i++) {
@@ -89,7 +93,7 @@ function draw() {
   if(mouseIsPressed){
   blob.update();
   }
-  blob.constrain();
+  blob.constrain(MAPSIZE);
   //affichage des 5 plus gros
   biggest = sort2(clients);
   if(clients.length>1) {

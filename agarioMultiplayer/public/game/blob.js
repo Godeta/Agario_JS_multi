@@ -6,6 +6,7 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
   this.skin = skin;
   var yoff = 0;
   var img;
+  
   if(!PerfectCircle) {
     var url = "img/"+skin+".png";
     img = loadImage(url,yes=> {console.log("L'image a bien chargée !")},no=> {skin="Aucun";} );
@@ -39,7 +40,8 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
     //sinon
     else {
       // drawIMG();
-      image(img,this.pos.x,this.pos.y,this.r*2,this.r*2);
+      // image(img,this.pos.x,this.pos.y,this.r*2,this.r*2);
+      ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
       // code déplacé dans le update
     }
   }
@@ -60,7 +62,7 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
     drawArrow(this.pos, mouse, 200);
     }
     else {
-    drawIMG(this.pos,mouse,img);
+    drawIMG(this.pos,mouse,img,this.r*4);
     }
   }
 
@@ -77,17 +79,17 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
       return false;
     }
   }
-  this.constrain = function () {
-    blob.pos.x = constrain(blob.pos.x, -width , width );
-    blob.pos.y = constrain(blob.pos.y, -height, height );
+  this.constrain = function (MAPSIZE) {
+    blob.pos.x = constrain(blob.pos.x, -width*MAPSIZE , width*MAPSIZE );
+    blob.pos.y = constrain(blob.pos.y, -height*MAPSIZE, height*MAPSIZE );
   };
 
-  function drawIMG(base, vec, img) {
+  function drawIMG(base, vec, img,size) {
     push();
     translate(base.x, base.y);
     rotate(vec.heading());
-    translate(vec.mag() - this.r*2, 0);
-    image(img,vec.x,vec.y,this.r*2,this.r*2);
+    translate(vec.mag(), 0);
+    image(img,vec.x,vec.y,size,size);
     pop();
   }
   function drawArrow(base, vec, myColor) {
