@@ -15,6 +15,11 @@ const MAPSIZE = 4;
 function setup() {
   createCanvas(600, 600);
   imageMode(CENTER);
+  for(var i =0; i<50; i++) {
+    var x = random(-width*MAPSIZE, width*MAPSIZE);
+  var y = random(-height*MAPSIZE, height*MAPSIZE);
+  blobs.push(new Blob(x, y, 16) );
+      }
   //texte pour l'affichage des plus gros blob
    div = createDiv('').size(100, 100);
   //connection
@@ -36,11 +41,9 @@ function setup() {
       // console.log(data);
       //ajout de petites orbes à manger
       if(blobs.length<1000) {
-        for(var i =0; i<2; i++) {
       var x = random(-width*MAPSIZE, width*MAPSIZE);
     var y = random(-height*MAPSIZE, height*MAPSIZE);
     blobs.push(new Blob(x, y, 16) );
-        }
       }
     });
   for (var i = 0; i < 50; i++) {
