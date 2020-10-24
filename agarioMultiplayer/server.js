@@ -22,12 +22,13 @@ function heartbeat() {
 //un tableau pour chaque client qui se connecte au serveur
 var clients = [];
 
-function Blob(id, x, y, r,name) {
+function Blob(id, x, y, r,name,img) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.r = r;
-    this.name = name;
+    this.name = name,
+    this.img = img;
 }
 
 function newConnection(socket) {
@@ -56,8 +57,8 @@ function newConnection(socket) {
     }
     //ajout du blob dans le tableaux de clients
     function starting(data) {
-        console.log(socket.id + " " + data.x + " " + data.y + " " + data.r + " "+data.name);
-        var blob = new Blob(socket.id, data.x, data.y, data.r,data.name);
+        console.log(socket.id + " " + data.x + " " + data.y + " " + data.r + " "+data.name + " "+data.img);
+        var blob = new Blob(socket.id, data.x, data.y, data.r,data.name, data.img);
         clients.push(blob);
     }
     //actualisation des positions des joueurs

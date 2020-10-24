@@ -26,13 +26,16 @@ function setup() {
   //connection
   // socket = io.connect('http://localhost:3000');
   socket = io();
-  blob = new Blob(random(width*MAPSIZE), random(height*MAPSIZE), random(8, 48), false, nom, skin);
+  // blob = new Blob(random(width*MAPSIZE), random(height*MAPSIZE), random(8, 48), false, nom, skin);
+  
+  blob = new Blob(0, 0, random(8, 48), false, nom, skin);
   //les données à envoyer au serveur
   var data = {
     x: blob.pos.x,
     y: blob.pos.y,
     r: blob.r,
-    name:nom
+    name:nom,
+    img:skin
   }
   socket.emit('start', data);
   //actualisation de la position des autres clients
@@ -82,12 +85,13 @@ function draw() {
       //on essaye de récupérer le blob de cet id à afficher
       try {
         var cliblob = cliBLobs[clients[i].id];
-        cliblob.updateOther(clients[i].x,clients[i].y,clients[i].r);
         cliblob.show();
+        cliblob.updateOther(clients[i].x,clients[i].y,clients[i].r);
       }
       //sinon on le créé
       catch (error) {
-        cliBLobs[clients[i].id] = new Blob(clients[i].x, clients[i].y, clients[i].r,false,clients[i].name,"Paul");
+        console.log(clients[i].img);
+        cliBLobs[clients[i].id] = new Blob(clients[i].x, clients[i].y, clients[i].r,false,clients[i].name,clients[i].img);
       }
 
       fill(200,30,0);

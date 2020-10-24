@@ -7,6 +7,7 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
   var yoff = 0;
   var img;
   var colorT = [random(255),random(255),random(40,200)];
+  var movingAbs =0, movingOrd =0, xoff = random(0,100), yoff = random(1000,10000);
   
   if(!PerfectCircle) {
     var url = "img/"+skin+".png";
@@ -69,7 +70,13 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
 
   this.updateOther = function (x,y,r) {
     var newV = createVector(x,y);
-    drawIMG(newV,createVector(random(-50,50),random(-10,10)),img,this.r*4);
+    xoff+= 0.01;
+    yoff+=0.02;
+    //bruit plus ou moins random entre 0 et 1 donne valeur entre 0 et width
+    movingAbs = map(noise(xoff),0,1,-10,10);
+    movingOrd = map(noise(yoff),0,1,0-10,10);
+    console.log(movingAbs + " "+ movingOrd);
+    drawIMG(newV,createVector(movingAbs,movingOrd),img,this.r*4);
     this.pos = newV;
     this.r = r;
   }
