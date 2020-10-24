@@ -9,6 +9,7 @@ var zoom = 1;
 var div;
 var nom = localStorage["nom"];
 var skin = localStorage["skin"];
+var lastEaten = ""; //id du dernier blob mangé pour ne pas envoyé plusieurs signaux eaten d'un même id
 
 const MAPSIZE = 4;
 const BALLSIZE = 7;
@@ -94,8 +95,9 @@ function draw() {
         var cliblob = cliBLobs[clients[i].id];
         cliblob.show();
         cliblob.updateOther(clients[i].x,clients[i].y,clients[i].r);
-        if (blob.eat(cliblob)) {
+        if (blob.eat(cliblob) && lastEaten != id) {
           socket.emit("eaten",id);
+          lastEaten = id;
         }
       }
       //sinon on le créé

@@ -89,5 +89,6 @@ function newConnection(socket) {
                 once = false;
             }
         }
+         once = true;
     }
 }
