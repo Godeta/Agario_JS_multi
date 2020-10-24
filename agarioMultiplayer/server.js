@@ -34,18 +34,12 @@ function Blob(id, x, y, r,name,img) {
 function newConnection(socket) {
     console.log("Nouveau client :" + socket.id);
      soCid = socket.id;
+     var once = true;
     
     //en cas de deconnection
-    socket.on("disconnect", function (soCid) {
-    console.log("Le client est parti :" + soCid );
-    var index = 0;
-    for (var i = 0; i<clients.length; i++) {
-        console.log("Id du client déconnecté :"+soCid+" id du client du tableau : "+clients[i].id);
-        if(soCid == clients[i].id) {
-            index = i;
-        }
-    }
-    clients.splice(index, 1);
+    socket.on("disconnect", function (msg) {
+    console.log("Le client est parti :" + soCid + " car :" + msg );
+    // clients.splice(clients[soCid], 1);
     });
     socket.on('mouse', mouseMsg);
     socket.on('start', starting);
@@ -84,14 +78,15 @@ function newConnection(socket) {
     }
     //actualisation des positions des joueurs
     function eatBlob(id) {
-        
-        console.log("manger");
+        // console.log("manger");
         for (var i = clients.length-1; i >=0; i--) {
             //attention 2 fois = dans les if !!!
-            if (id == clients[i].id) {
-                console.log("Déconnection de : "+clients[i].name);
+            if (id == clients[i].id && once ==true) {
+                console.log("Déconnection de : "+clients[i].name + " "+id);
                 // io.clients[id].emit("deco");
+                io.to(id).emit('forceDisconnect');
                 clients.splice(clients[id], 1);
+                once = false;
             }
         }
     }

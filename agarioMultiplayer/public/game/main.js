@@ -39,6 +39,12 @@ function setup() {
     img:skin
   }
   socket.emit('start', data);
+  // si on reçoit un signal de déconnexion
+  socket.on('forceDisconnect', function(){
+    console.log("deco");
+    window.location="game_over.html";
+    socket.disconnect();
+});
   //actualisation de la position des autres clients
   socket.on('heartbeat',
     function (data) {
@@ -48,14 +54,14 @@ function setup() {
       if(blobs.length<1000) {
       var x = random(-width*MAPSIZE, width*MAPSIZE);
     var y = random(-height*MAPSIZE, height*MAPSIZE);
-    blobs.push(new Blob(x, y, BALLSIZE+random(-4,4)) );
+    blobs.push(new Blob(x, y, BALLSIZE+random(-2,18)) );
       }
     });
   for (var i = 0; i < 50; i++) {
     //on créer aussi des particules en dehors de la fenêtre vu qu'elle se déplace en fonctione de notre position avec translate
     var x = random(-width, width);
     var y = random(-height, height);
-    blobs[i] = new Blob(x, y, 16);
+    blobs[i] = new Blob(x, y, BALLSIZE);
   }
 }
 
