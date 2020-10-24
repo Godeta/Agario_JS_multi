@@ -11,6 +11,7 @@ var nom = localStorage["nom"];
 var skin = localStorage["skin"];
 
 const MAPSIZE = 4;
+const BALLSIZE = 7;
 
 
 function setup() {
@@ -19,7 +20,7 @@ function setup() {
   for(var i =0; i<50; i++) {
     var x = random(-width*MAPSIZE, width*MAPSIZE);
   var y = random(-height*MAPSIZE, height*MAPSIZE);
-  blobs.push(new Blob(x, y, 16) );
+  blobs.push(new Blob(x, y, BALLSIZE) );
       }
   //texte pour l'affichage des plus gros blob
    div = createDiv('').size(100, 100);
@@ -47,7 +48,7 @@ function setup() {
       if(blobs.length<1000) {
       var x = random(-width*MAPSIZE, width*MAPSIZE);
     var y = random(-height*MAPSIZE, height*MAPSIZE);
-    blobs.push(new Blob(x, y, 16) );
+    blobs.push(new Blob(x, y, BALLSIZE+random(-4,4)) );
       }
     });
   for (var i = 0; i < 50; i++) {
@@ -87,6 +88,9 @@ function draw() {
         var cliblob = cliBLobs[clients[i].id];
         cliblob.show();
         cliblob.updateOther(clients[i].x,clients[i].y,clients[i].r);
+        if (blob.eat(cliblob)) {
+          socket.emit("eaten",id);
+        }
       }
       //sinon on le créé
       catch (error) {

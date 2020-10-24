@@ -50,6 +50,7 @@ function newConnection(socket) {
     socket.on('mouse', mouseMsg);
     socket.on('start', starting);
     socket.on('update', updateData);
+    socket.on('eaten', eatBlob);
     //envoie les données à tous les clients
     function mouseMsg(data) {
         socket.broadcast.emit('mouse', clients);
@@ -69,15 +70,29 @@ function newConnection(socket) {
             //attention 2 fois = dans les if !!!
             if (socket.id == clients[i].id) {
                 blob = clients[i];
+                try {
+                    blob.x = data.x;
+                    blob.y = data.y;
+                    blob.r = data.r;
+                    }
+                    catch (e){
+                        console.error(e);
+                    }
             }
         }
-        try {
-        blob.x = data.x;
-        blob.y = data.y;
-        blob.r = data.r;
-        }
-        catch (e){
-            console.error(e);
+        
+    }
+    //actualisation des positions des joueurs
+    function eatBlob(id) {
+        
+        console.log("manger");
+        for (var i = clients.length-1; i >=0; i--) {
+            //attention 2 fois = dans les if !!!
+            if (id == clients[i].id) {
+                console.log("Déconnection de : "+clients[i].name);
+                // io.clients[id].emit("deco");
+                clients.splice(clients[id], 1);
+            }
         }
     }
 }

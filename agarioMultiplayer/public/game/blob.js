@@ -82,17 +82,19 @@ function Blob(x, y, r, PerfectCircle = true,name ="nobody", skin) {
   }
 
   this.eat = function (other) {
+    // pour le manger le blob doit être plus grand que l'autre blob
+    if (this.r > other.r) {
     var d = p5.Vector.dist(this.pos, other.pos);
-    //si la distance entre les deux blobs est inférieur au rayo nde l'un + le rayon de l'autre
+    //si la distance entre les deux blobs est inférieur au rayon de l'un + le rayon de l'autre
     if (d < this.r + other.r) {
       //this.r += other.r/5; fonctionne mais y'a mieux
       //on ajoute l'aire
       var sum = PI * this.r * this.r + PI * other.r * other.r;
       this.r = sqrt(sum / PI);
       return true;
-    } else {
-      return false;
-    }
+    } 
+  }
+  return false;
   }
   this.constrain = function (MAPSIZE) {
     blob.pos.x = constrain(blob.pos.x, -width*MAPSIZE , width*MAPSIZE );
